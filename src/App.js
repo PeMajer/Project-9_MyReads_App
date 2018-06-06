@@ -22,6 +22,14 @@ class BooksApp extends React.Component {
     })
   }
 
+  updateBook = (book,shelf) => {
+    book.shelf=shelf
+    this.setState({
+      books: this.state.books.filter((b) => b.id !== book.id).concat([ book ])
+    })
+    BooksAPI.update(book,shelf)
+  }
+
   render() {
     return (
       <div className="app">
@@ -56,14 +64,17 @@ class BooksApp extends React.Component {
                 <BookShelf
                   books={this.state.books.filter((book)=> book.shelf === 'currentlyReading')}
                   title='Currently Reading'
+                  onUpdateBook={this.updateBook}
                  />
                 <BookShelf
                   books={this.state.books.filter((book)=> book.shelf === 'wantToRead')}
                   title='Want to read'
+                  onUpdateBook={this.updateBook}
                  />
                 <BookShelf
                   books={this.state.books.filter((book)=> book.shelf === 'read')}
                   title='Read'
+                  onUpdateBook={this.updateBook}
                  />
               </div>
             </div>
