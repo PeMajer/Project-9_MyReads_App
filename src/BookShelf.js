@@ -36,4 +36,8 @@ class BookShelf extends Component {
   }
 }
 
+BookShelf.defaultProps = {
+  bookshelftitle: 'bookshelf-title'
+};
+
 export default BookShelf;
