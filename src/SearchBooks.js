@@ -9,37 +9,34 @@ class SearchBooks extends Component {
   }
 
   search = (query) => {
-      this.setState({query: query}, () => {
-        if (this.state.query.length>0) {
-          BooksAPI.search(query)
-            .then((data) => this.setState({results: data}))
-            .catch(()=> this.setState({results: []}))
-        } else {
-            this.setState({results: []})
-        }
-      })
+    this.setState({query: query}, () => {
+      if (this.state.query.length>0) {
+        BooksAPI.search(query)
+          .then((data) => this.setState({results: data}))
+          .catch(()=> this.setState({results: []}))
+      } else {
+          this.setState({results: []})
+      }
+    })
   }
 
-  findAndDeleteDuplicate = (showingBooks,books) => {
-    let duplicateItem = []
+  isBookInShelf = (showingBooks,books) => {
+
     for (let i = 0; i < showingBooks.length; i++) {
       for (let j = 0; j < books.length; j++) {
-        if (showingBooks[i].id === books[j].id) duplicateItem.push(i)
+        if (showingBooks[i].id === books[j].id) showingBooks[i].shelf = books[j].shelf
       }
-    }
-    for (let i = duplicateItem.length-1; i >= 0; i--) {
-      showingBooks.splice(duplicateItem[i],1)
     }
   }
 
   render() {
     const { results, query } = this.state
-    const { onUpdateBook, books} = this.props
+    const { onUpdateBook, books } = this.props
 
     let showingBooks
-    if (results.length>0 && query.length>0) {
+    if (results.length >0 && query.length>0){
       showingBooks = results
-      this.findAndDeleteDuplicate(showingBooks,books)
+      this.isBookInShelf(showingBooks,books)
     } else {
       showingBooks=[]
     }
