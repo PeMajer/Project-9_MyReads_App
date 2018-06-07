@@ -33,7 +33,6 @@ class BooksApp extends React.Component {
       this.setState({
         books: this.state.books.filter((b) => b.id !== book.id)
       })
-      console.log('knihovna: ', this.state.books)
     })
   }
 
