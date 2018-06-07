@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import BookShelf from './BookShelf'
 import * as BooksAPI from './BooksAPI'
+import sortBy from 'sort-by'
 
 class SearchBooks extends Component {
   state = {
@@ -44,6 +45,8 @@ class SearchBooks extends Component {
     } else {
       showingBooks=[]
     }
+
+    showingBooks.sort(sortBy('title'))
 
     return (
       <div className="search-books">
