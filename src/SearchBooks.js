@@ -8,7 +8,7 @@ class SearchBooks extends Component {
     query: ''
   }
 
-  handleSearch = (query) => {
+  search = (query) => {
       this.setState({query: query}, () => {
         console.log('Querry je:',query)
         if (this.state.query.length>0) {
@@ -21,19 +21,29 @@ class SearchBooks extends Component {
       })
   }
 
+  findAndDeleteDuplicate = (showingBooks,books) => {
+    let duplicateItem = []
+    for (let i = 0; i < showingBooks.length; i++) {
+      for (let j = 0; j < books.length; j++) {
+        if (showingBooks[i].id === books[j].id) duplicateItem.push(i)
+      }
+    }
+    for (let i = duplicateItem.length-1; i >= 0; i--) {
+      showingBooks.splice(duplicateItem[i],1)
+    }
+  }
+
   render() {
     const { results, query } = this.state
     const { onUpdateBook, books} = this.props
 
     let showingBooks
     if (results.length>0 && query.length>0) {
-      showingBooks= results
-      console.log(showingBooks)
+      showingBooks = results
+      this.findAndDeleteDuplicate(showingBooks,books)
     } else {
       showingBooks=[]
     }
-
-
 
     return (
       <div className="search-books">
@@ -41,7 +51,7 @@ class SearchBooks extends Component {
           <a className="close-search" onClick={() => this.setState({ showSearchPage: false })}>Close</a>
           <div className="search-books-input-wrapper">
             <input type="text" placeholder="Search by title or author"
-              onChange={(event) => this.handleSearch(event.target.value.trim())}
+              onChange={(event) => this.search(event.target.value.trim())}
             />
           </div>
         </div>
