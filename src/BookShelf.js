@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import sortBy from 'sort-by'
+import defaultImg from './images/open-b.png'
 
 class BookShelf extends Component {
   render() {
     const { books, title, onUpdateBook, bookshelftitle } = this.props
     books.sort(sortBy('title'))
+
     return (
       <div className="bookshelf">
         <h2 className={bookshelftitle}>{title}</h2>
@@ -14,9 +16,8 @@ class BookShelf extends Component {
               <li key={book.id}>
                 <div className="book">
                   <div className="book-top">
-                    { book.imageLinks &&
-                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.thumbnail})` }}></div>
-                    }
+                      <div className="book-cover" style={{ width: 128, height: 193, backgroundImage:  book.imageLinks ? `url(${book.imageLinks.thumbnail})` : 'url(' + defaultImg + ')' }}></div>
+
                     <div className="book-shelf-changer">
                       <select defaultValue={book.shelf ? book.shelf : 'none'} onChange={(event) => onUpdateBook(book, event.target.value)} >
                         <option value="moveTo" disabled>Move to...</option>
