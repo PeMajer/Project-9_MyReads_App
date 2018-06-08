@@ -10,13 +10,13 @@ class SearchBooks extends Component {
   }
 
   search = (query) => {
+    if (this.state.query==='') this.setState({results: []})
+
     this.setState({query: query}, () => {
       if (this.state.query.length>0) {
         BooksAPI.search(query)
           .then((data) => this.setState({results: data}))
           .catch(()=> this.setState({results: []}))
-      } else {
-          this.setState({results: []})
       }
     })
   }
