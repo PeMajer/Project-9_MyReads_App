@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import sortBy from 'sort-by'
+import PropTypes from 'prop-types'
 import defaultImg from './images/open-b.png'
 
 class BookShelf extends Component {
+  static propTypes = {
+    books: PropTypes.array.isRequired,
+    title: PropTypes.string,
+    onUpdateBook: PropTypes.func.isRequired,
+    bookshelftitle: PropTypes.string
+  }
+
   render() {
     const { books, title, onUpdateBook, bookshelftitle } = this.props
     books.sort(sortBy('title'))
