@@ -17,15 +17,20 @@ class BooksApp extends React.Component {
     })
   }
 
+  /**
+  * @description update information about book
+  * @param {object} book
+  * @param {string} shelf
+  */
   updateBook = (book,shelf) => {
-    book.shelf=shelf
+    book.shelf=shelf      //set/change book's shelf
     BooksAPI.update(book,shelf).then(()=>{
       book.shelf !== 'none' ?
       this.setState({
         books: this.state.books.filter((b) => b.id !== book.id).concat([ book ])
       }) :
       this.setState({
-        books: this.state.books.filter((b) => b.id !== book.id)
+        books: this.state.books.filter((b) => b.id !== book.id)     //remove from shelf
       })
     })
   }

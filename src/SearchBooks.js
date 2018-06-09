@@ -15,6 +15,10 @@ class SearchBooks extends Component {
     query: ''
   }
 
+  /**
+  * @description search books from api
+  * @param {string} query
+  */
   search = (query) => {
     if (this.state.query==='') this.setState({results: []})
 
@@ -27,8 +31,12 @@ class SearchBooks extends Component {
     })
   }
 
+  /**
+  * @description compare search results with shelf and set right shelf
+  * @param {showingBooks} array
+  * @param {books} array
+  */
   isBookInShelf = (showingBooks,books) => {
-
     for (let i = 0; i < showingBooks.length; i++) {
       for (let j = 0; j < books.length; j++) {
         if (showingBooks[i].id === books[j].id) showingBooks[i].shelf = books[j].shelf
